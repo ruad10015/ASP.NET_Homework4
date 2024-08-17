@@ -1,0 +1,112 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Discount</th>
+            <th scope="col">#</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td scope="row">@item.Id</td>
+                <td scope="row">@item.Name</td>
+                <td scope="row">@item.Description</td>
+                <td scope="row">@item.Price</td>
+                <td scope="row">@item.Discount</td>
+                <td scope="row">
+                    <form method="post" asp-page-handler="EditProduct">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                </td>
+                <td scope="row">
+                    <form method="post" asp-page-handler="Delete">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        @* <button type="submit" class="btn btn-danger btn-sm">Delete</button> *@
+                    </form>
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+@if (Model.EditProduct == null)
+{
+    <form class="col-5" method="post" asp-page-handler="AddProduct">
+        <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input required asp-for="Product.Name" class="form-control" />
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product Description</label>
+            <input required asp-for="Product.Description" class="form-control" />
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product Price</label>
+            <input required asp-for="Product.Price" class="form-control" />
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product Discount</label>
+            <input required asp-for="Product.Discount" class="form-control" />
+            <span asp-validation-for="Product.Discount" class="text-danger"></span>
+
+        </div>
+        <button type="submit" class="btn btn-success">Add Product</button>
+    </form>
+}
+
+@if(Model.EditProduct != null)
+{
+    <form class="col-5" method="post" asp-page-handler="UpdateProduct">
+        <input type="hidden" asp-for="EditProduct.Id" />
+        <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input required asp-for="EditProduct.Name" class="form-control" />
+            <span asp-validation-for="EditProduct.Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product Description</label>
+            <input required asp-for="EditProduct.Description" class="form-control" />
+            <span asp-validation-for="EditProduct.Description" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product Price</label>
+            <input required asp-for="EditProduct.Price" class="form-control" />
+            <span asp-validation-for="EditProduct.Price" class="text-danger"></span>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Product Discount</label>
+            <input required asp-for="EditProduct.Discount" class="form-control" />
+            <span asp-validation-for="EditProduct.Discount" class="text-danger"></span>
+
+        </div>
+        <button type="submit" class="btn btn-success">Update Product</button>
+    </form>
+}  
+
+
+
